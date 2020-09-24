@@ -16,6 +16,7 @@ import {
   StatusBar,
   Image,
   Button,
+  TextInput,
 } from 'react-native';
 
 const Jobs = (props) => {
@@ -27,27 +28,50 @@ const Jobs = (props) => {
   };
 
   return (
-    <>
-      <Image
-        source={{uri: img}}
-        style={{width: props.largura, height: props.altura}}
-      />
-      <Text style={{fontSize: 25}}> {nome} </Text>
-      <Button title="Entrar" onPress={entrar} />
-    </>
+    <View style={styles.container}>
+      <TextInput style={styles.input} />
+
+      <Text style={styles.texto}></Text>
+    </View>
   );
 };
 
-const App = () => {
-  return (
-    <View>
-      <Text>Olá André</Text>
-      <Text>Meu primeiro app</Text>
-      <Text style={{color: 'red', fontSize: 25, margin: 15}}>
-        Sujeito programador
-      </Text>
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  input: {
+    height: 45,
+    borderWidth: 1,
+    borderColor: '#222',
+    margin: 10,
+    fontSize: 20,
+    padding: 10,
+  },
+  texto: {
+    textAlign: 'center',
+    fontSize: 25,
+  },
+});
 
-      <Jobs altura={200} largura={200} nome="Steve Jobs" />
+const App = (props) => {
+  const [name, setName] = useState('André');
+  const [input, setInput] = useState('André');
+
+  const getName = () => {
+    setName(`Bem vindo: ${input}`);
+  };
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Digite seu nome."
+        underlineColorAndroid="transparent"
+        onChangeText={(texto) => setInput(texto)}
+      />
+      <Button title="Entrar" onPress={getName} />
+      <Text style={styles.texto}> {name}</Text>
     </View>
   );
 };
