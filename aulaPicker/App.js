@@ -14,26 +14,105 @@ import {
   View,
   Text,
   StatusBar,
+  Switch,
+  TextInput,
+  TouchableOpacity,
 } from 'react-native';
 
 import {Picker} from '@react-native-community/picker';
 import Slider from '@react-native-community/slider';
 
 const App = () => {
-  const [valor, setValor] = useState(0);
-  const [pizza, setPizza] = useState(0);
-  const [pizzas] = useState([
-    {key: 1, sabor: 'Calabresa', valor: 35.9},
-    {key: 2, sabor: 'Brigadeiro', valor: 45.9},
-    {key: 3, sabor: 'Portuguesa', valor: 50.9},
-    {key: 4, sabor: 'Queijo', valor: 25.9},
-  ]);
+  const [conta, abrirConta] = useState(false);
+  const [nome, setNome] = useState('');
+  const [idade, setIdade] = useState('');
+  const [sexo, setSexo] = useState(null);
+  const [limit, setLimit] = useState(100);
+  const [estudante, setIsEstudante] = useState(false);
+
+  const validCampos = (nome && nome !== '', idade && idade !== '', sexo);
+
+  const sexos = [
+    {id: 1, value: 'masculino'},
+    {id: 2, value: 'feminino'},
+  ];
+
+  const contaAbrir = () => {
+    abrirConta(true);
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.logo}>Menu pizza</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.logo}>Banco React</Text>
 
-      <Picker
+        <View>
+          <View>
+            <Text style={styles.title}>Qual seu nome?</Text>
+            <TextInput
+              placeholder="Digite seu nome..."
+              onChangeText={(val) => setNome(val)}
+            />
+            <Text style={styles.title}>Qual sua idade?</Text>
+            <TextInput
+              placeholder="Digite sua idade..."
+              onChangeText={(val) => setIdade(val)}
+            />
+          </View>
+
+          <View>
+            <Text style={styles.title}>Qual seu sexo?</Text>
+            <Picker
+              selectedValue={sexo}
+              onValueChange={(itemVal) => {
+                setSexo(itemVal);
+              }}>
+              {sexos.map((v, k) => {
+                return <Picker.Item key={k} value={k} label={v.value} />;
+              })}
+            </Picker>
+          </View>
+
+          <View>
+            <Text style={styles.title}>Qual limite desejado?</Text>
+            <Slider
+              minimumValue={100}
+              maximumValue={1000}
+              value={limit}
+              onValueChange={(val) => setLimit(val)}
+            />
+          </View>
+
+          <View>
+            <Text style={styles.title}>É estudante?</Text>
+            <Switch
+              value={estudante}
+              onValueChange={(val) => setIsEstudante(val)}
+            />
+          </View>
+        </View>
+
+        {conta ? (
+          <View>
+            <Text style={styles.title}>Dados</Text>
+            <View>
+              <Text>Nome: {nome}</Text>
+              <Text>Idade: {idade}</Text>
+              <Text>Sexo: {sexo}</Text>
+              <Text>Limite: {limit.toFixed(2)} </Text>
+              <Text>Estudante {}</Text>
+            </View>
+          </View>
+        ) : null}
+
+        <TouchableOpacity
+          disabled={validCampos}
+          style={styles.button}
+          onPress={() => contaAbrir}>
+          <Text style={styles.text}>Abrir conta</Text>
+        </TouchableOpacity>
+
+        {/* <Picker
         selectedValue={pizza}
         onValueChange={(itemVal, index) => {
           setPizza(itemVal);
@@ -41,12 +120,12 @@ const App = () => {
         {pizzas.map((v, k) => {
           return <Picker.Item key={k} value={k} label={v.sabor} />;
         })}
-      </Picker>
+      </Picker> */}
 
-      <Text style={styles.pizza}>Você esoclheu: {pizzas[pizza].sabor} </Text>
-      <Text style={styles.pizza}>R$: {pizzas[pizza].valor.toFixed(2)} </Text>
+        {/* <Text style={styles.pizza}>Você esoclheu: {pizzas[pizza].sabor} </Text>
+      <Text style={styles.pizza}>R$: {pizzas[pizza].valor.toFixed(2)} </Text> */}
 
-      <Slider
+        {/* <Slider
         minimumValue={0}
         maximumValue={100}
         minimumTrackTintColor={'#00ff00'}
@@ -55,7 +134,18 @@ const App = () => {
         onValueChange={(val) => setValor(val)}
       />
       <Text> {valor.toFixed(0)} </Text>
-    </View>
+
+      <Switch
+        thumbColor="brown"
+        value={status}
+        onValueChange={(val) => setStatus(val)}
+      /> */}
+
+        {/* <Text style={{textAlign: 'center', fontSize: 15}}>
+        {status ? 'Ativo' : 'Inativo'}
+      </Text> */}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -63,16 +153,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 20,
+    paddingHorizontal: 20,
   },
   logo: {
     textAlign: 'center',
     fontSize: 25,
     fontWeight: 'bold',
+    marginBottom: 15,
   },
-  pizza: {
-    marginTop: 15,
-    fontSize: 25,
-    textAlign: 'center',
+  title: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: 'darkblue',
+    paddingBottom: 10,
+  },
+  button: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 14,
+  },
+  text: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
 });
 
