@@ -8,35 +8,82 @@
 
 import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
-  ScrollView,
+  FlatList,
+  TouchableOpacity,
+  Image,
   View,
   Text,
-  StatusBar,
-  FlatList,
 } from 'react-native';
 
-import Lista from './src/Lista';
+import Lista from './src/components/Lista';
 
 const App = () => {
-  const feed = [{}];
+  const feed = [
+    {
+      id: '1',
+      nome: 'André Souza',
+      descricao: 'Mais um dia de bugs',
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png',
+      imgpublicacao: 'https://sujeitoprogramador.com/instareact/foto1.png',
+      likeada: false,
+      likers: 5,
+    },
+    {
+      id: '2',
+      nome: 'André Souza',
+      descricao: 'Mais um dia de bugs',
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png',
+      imgpublicacao: 'https://sujeitoprogramador.com/instareact/foto2.png',
+      likeada: false,
+      likers: 0,
+    },
+    {
+      id: '3',
+      nome: 'André Souza',
+      descricao: 'Mais um dia de bugs',
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil3.png',
+      imgpublicacao: 'https://sujeitoprogramador.com/instareact/foto3.png',
+      likeada: false,
+      likers: 2,
+    },
+    {
+      id: '4',
+      nome: 'André Souza',
+      descricao: 'Mais um dia de bugs',
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png',
+      imgpublicacao: 'https://sujeitoprogramador.com/instareact/foto4.png',
+      likeada: false,
+      likers: 4,
+    },
+    {
+      id: '5',
+      nome: 'André Souza',
+      descricao: 'Mais um dia de bugs',
+      imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil3.png',
+      imgpublicacao: 'https://sujeitoprogramador.com/instareact/foto5.png',
+      likeada: false,
+      likers: 1,
+    },
+  ];
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity>
-          <Image source={require('./src/img/logo.png')} />
+          <Image style={styles.logo} source={require('./src/img/logo.png')} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Image source={require('./src/img/send.png')} />
+          <Image style={styles.send} source={require('./src/img/send.png')} />
         </TouchableOpacity>
       </View>
 
       <FlatList
+        style={{flex: 1}}
         showsVerticalScrollIndicator={false}
         data={feed}
-        renderItem={(item) => <Lista data={item} />}
+        keyExtractor={(item) => item.id}
+        renderItem={({item}) => <Lista data={item} />}
       />
     </View>
   );

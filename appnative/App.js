@@ -19,6 +19,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import {TextField} from 'react-native-material-textfield';
 
 const styles = StyleSheet.create({
   container: {
@@ -221,6 +222,9 @@ const App = (props) => {
 
   return (
     <View style={styles.container}>
+      <View>
+        <TextField label="Label" />
+      </View>
       <Image
         style={styles.img}
         source={
