@@ -19,6 +19,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import async
+
 import {Picker} from '@react-native-community/picker';
 import Slider from '@react-native-community/slider';
 
@@ -30,7 +32,7 @@ const App = () => {
   const [limit, setLimit] = useState(100);
   const [estudante, setIsEstudante] = useState(false);
 
-  const validCampos = (nome && nome !== '', idade && idade !== '', sexo);
+  //const validCampos = (nome && nome !== '', idade && idade !== '', sexo);
 
   const sexos = [
     {id: 1, value: 'masculino'},
@@ -52,6 +54,7 @@ const App = () => {
             <TextInput
               placeholder="Digite seu nome..."
               onChangeText={(val) => setNome(val)}
+              underlineColorAndroid="transparent"
             />
             <Text style={styles.title}>Qual sua idade?</Text>
             <TextInput
@@ -106,11 +109,21 @@ const App = () => {
         ) : null}
 
         <TouchableOpacity
-          disabled={validCampos}
+          //disabled={validCampos}
           style={styles.button}
           onPress={() => contaAbrir}>
           <Text style={styles.text}>Abrir conta</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          //disabled={validCampos}
+          style={styles.button}>
+          <Text style={styles.text}>+</Text>
+        </TouchableOpacity>
+
+        <View style={{marginVertical: 15, padding: 10, flex: 1}}>
+          <Text style={{fontWeight: 'bold', fontSize: 30}}>{nome}</Text>
+        </View>
 
         {/* <Picker
         selectedValue={pizza}
