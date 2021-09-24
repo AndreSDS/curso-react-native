@@ -1,12 +1,24 @@
-import React from 'react';
-import {Image, View, Text} from 'react-native';
-import Animated from 'react-native-reanimated';
+import React, {useState, useEffect} from 'react';
+import {Animated} from 'react-native';
 import {theme, images} from '../../constants';
-import {SafeContainer, OnboardingTitle} from './styles';
+import {
+  Container,
+  ItemContainer,
+  ItemImgContainer,
+  ItemImg,
+  TextContainer,
+  TextTitle,
+  TextDescription,
+  ItemButton,
+  ItemButtonText,
+  DotsContainer,
+  Content,
+  ContentDots,
+} from './styles';
 
 const {onboarding1, onboarding2, onboarding3} = images;
 const {COLORS, FONTS, SIZES} = theme;
-const {white, black, blue, gray} = COLORS;
+const {blue, gray} = COLORS;
 const onboardings = [
   {
     title: "Let's Travelling",
@@ -29,53 +41,53 @@ const onboardings = [
 ];
 
 const Onboarding = () => {
+  const [completed, setCompleted] = useState(false);
+
   const scrollX = new Animated.Value(0);
+
+  //esse componente pode ser um memo
+  const ItemContent = ({img, title, description}) => {
+    return (
+      <ItemContainer>
+        <ItemImgContainer>
+          <ItemImg source={img} resizeMode="cover" />
+        </ItemImgContainer>
+
+        <TextContainer>
+          <TextTitle>{title}</TextTitle>
+          <TextDescription>{description}</TextDescription>
+        </TextContainer>
+        <ItemButton onPress={() => console.warn('clicou')}>
+          <ItemButtonText>{completed ? "Let's Go!" : 'Skip'}</ItemButtonText>
+        </ItemButton>
+      </ItemContainer>
+    );
+  };
 
   const renderContent = () => {
     return (
       <Animated.ScrollView
-        decelerationRate={0}
-        scrollEventThrottle={16}
         horizontal
         pagingEnabled
         scrollEnabled
         snapToAlignment="center"
         showsHorizontalScrollIndicator={false}
+        decelerationRate={0}
+        scrollEventThrottle={16}
         onScroll={Animated.event(
-          [{nativeEvent: {contentOffSet: {x: scrollX}}}],
+          [
+            {
+              nativeEvent: {
+                contentOffset: {
+                  x: scrollX,
+                },
+              },
+            },
+          ],
           {useNativeDriver: false},
         )}>
         {onboardings.map((item, index) => (
-          <View key={index} style={{width: SIZES.width}}>
-            <View
-              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <Image
-                source={item.img}
-                resizeMode="cover"
-                style={{width: '100%', height: '100%'}}
-              />
-            </View>
-            <View
-              style={{
-                position: 'absolute',
-                bottom: '10%',
-                left: 40,
-                right: 40,
-              }}>
-              <Text style={{...FONTS.h1, color: gray, textAlign: 'center'}}>
-                {item.title}
-              </Text>
-              <Text
-                style={{
-                  ...FONTS.body3,
-                  textAlign: 'center',
-                  marginTop: SIZES.base,
-                  color: gray,
-                }}>
-                {item.description}
-              </Text>
-            </View>
-          </View>
+          <ItemContent key={index} {...item} />
         ))}
       </Animated.ScrollView>
     );
@@ -85,17 +97,17 @@ const Onboarding = () => {
     const dotPosition = Animated.divide(scrollX, SIZES.width);
 
     return (
-      <View style={{flexDirection: 'row', height: SIZES.padding}}>
+      <DotsContainer>
         {onboardings.map((item, index) => {
           const opacity = dotPosition.interpolate({
             inputRange: [index - 1, index, index + 1],
-            outPutRange: [0.3, 1, 0.3],
+            outputRange: [0.3, 1, 0.3],
             extrapolate: 'clamp',
           });
 
           const dotSize = dotPosition.interpolate({
             inputRange: [index - 1, index, index + 1],
-            outPutRange: [SIZES.base, 17, SIZES.base],
+            outputRange: [SIZES.base, 17, SIZES.base],
             extrapolate: 'clamp',
           });
 
@@ -105,30 +117,34 @@ const Onboarding = () => {
               opacity={opacity}
               style={{
                 borderRadius: SIZES.radius,
-                backgroundColor: blue,
+                backgroundColor: COLORS.blue,
                 marginHorizontal: SIZES.radius / 2,
                 width: dotSize,
-                height: 20,
+                height: dotSize,
               }}
             />
           );
         })}
-      </View>
+      </DotsContainer>
     );
   };
 
-  return (
-    <SafeContainer bgcolor={white}>
-      <View>{renderContent()}</View>
+  useEffect(() => {
+    scrollX.addListener(({value}) => {
+      if (Math.floor(value / SIZES.width) === onboardings.length - 1) {
+        setCompleted(true);
+      }
+    });
 
-      <View
-        style={{
-          position: 'absolute',
-          bottom: SIZES.height > 700 ? '26%' : '15%',
-        }}>
-        {renderDots()}
-      </View>
-    </SafeContainer>
+    return () => scrollX.removeAllListeners();
+  }, [scrollX]);
+
+  return (
+    <Container>
+      <Content>{renderContent()}</Content>
+
+      <ContentDots>{renderDots()}</ContentDots>
+    </Container>
   );
 };
 

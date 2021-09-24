@@ -7,6 +7,7 @@
  */
 
 import React, {useState} from 'react';
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -18,10 +19,15 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import LottieView from 'lottie-react-native';
+import animation from './src/lf20_znfposau.json';
+
 const App = () => {
   let [numero, setNumero] = useState(0);
   let [timer, setTimer] = useState(null);
   let [btn, setBtn] = useState('Vai');
+
+  console.log('qualquer coisa ', animation.nm);
 
   const vai = () => {
     if (timer != null) {
@@ -47,24 +53,13 @@ const App = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('./src/images/cronometro.png')}
-        style={styles.cronometro}
-      />
-
-      <Text style={styles.timer}>{numero.toFixed(1)}</Text>
-
-      <View style={styles.btnArea}>
-        <TouchableOpacity onPress={vai} style={styles.btn}>
-          <Text style={styles.btnTexto}>{btn}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => limpar} style={styles.btn}>
-          <Text style={styles.btnTexto}>Limpar</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <LottieView
+      source={require('./src/lf20_znfposau.json')}
+      resizeMode="contain"
+      autoSize
+      autoPlay
+      loop
+    />
   );
 };
 

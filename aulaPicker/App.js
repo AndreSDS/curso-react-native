@@ -19,8 +19,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import async
-
 import {Picker} from '@react-native-community/picker';
 import Slider from '@react-native-community/slider';
 
