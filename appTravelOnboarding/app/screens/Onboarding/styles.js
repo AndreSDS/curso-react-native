@@ -11,7 +11,7 @@ export const Container = styled.View`
 `;
 
 export const ItemContainer = styled.View`
-  width: ${SIZES.width};
+  width: ${SIZES.width}px;
 `;
 
 export const ItemImgContainer = styled.View`
@@ -34,16 +34,16 @@ export const TextContainer = styled.View`
 
 export const TextTitle = styled.Text`
   font-family: ${FONTS.h1.fontFamily};
-  font-size: ${SIZES.h1};
+  font-size: ${SIZES.h1}px;
   line-height: ${FONTS.h1.lineHeight}px;
   color: ${COLORS.gray};
   text-align: center;
 `;
 export const TextDescription = styled.Text`
   font-family: ${FONTS.body3.fontFamily};
-  font-size: ${SIZES.body3};
+  font-size: ${SIZES.body3}px;
   line-height: ${FONTS.body3.lineHeight}px;
-  margin-top: ${SIZES.base};
+  margin-top: ${SIZES.base}px;
   text-align: center;
   color: gray;
 `;
@@ -63,7 +63,7 @@ export const ItemButton = styled.TouchableOpacity`
 
 export const ItemButtonText = styled.Text`
   font-family: ${FONTS.h1.fontFamily};
-  font-size: ${SIZES.h1};
+  font-size: ${SIZES.h1}px;
   line-height: ${FONTS.h1.lineHeight}px;
   color: ${COLORS.white};
 `;
@@ -76,7 +76,7 @@ export const DotsContainer = styled.View`
 `;
 
 export const DotsContent = styled.View`
-  border-radius: ${SIZES.radius};
+  border-radius: ${SIZES.radius}px;
   background-color: ${COLORS.blue};
   margin: 0 ${SIZES.radius / 2}px;
   width: 20px;
