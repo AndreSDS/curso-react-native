@@ -35,14 +35,14 @@ export const TextContainer = styled.View`
 export const TextTitle = styled.Text`
   font-family: ${FONTS.h1.fontFamily};
   font-size: ${SIZES.h1};
-  line-height: ${FONTS.h1.lineHeight};
+  line-height: ${FONTS.h1.lineHeight}px;
   color: ${COLORS.gray};
   text-align: center;
 `;
 export const TextDescription = styled.Text`
   font-family: ${FONTS.body3.fontFamily};
   font-size: ${SIZES.body3};
-  line-height: ${FONTS.body3.lineHeight};
+  line-height: ${FONTS.body3.lineHeight}px;
   margin-top: ${SIZES.base};
   text-align: center;
   color: gray;
@@ -64,13 +64,13 @@ export const ItemButton = styled.TouchableOpacity`
 export const ItemButtonText = styled.Text`
   font-family: ${FONTS.h1.fontFamily};
   font-size: ${SIZES.h1};
-  line-height: ${FONTS.h1.lineHeight};
+  line-height: ${FONTS.h1.lineHeight}px;
   color: ${COLORS.white};
 `;
 
 export const DotsContainer = styled.View`
   flex-direction: row;
-  height: ${SIZES.padding};
+  height: ${SIZES.padding}px;
   align-items: center;
   justify-content: center;
 `;
@@ -89,7 +89,3 @@ export const ContentDots = styled.View`
   position: absolute;
   bottom: ${SIZES.height > 700 ? '26%' : '15%'};
 `;
-
-export const SafeContainer = styled.SafeAreaView``;
-
-export const OnboardingTitle = styled.Text``;
