@@ -8,8 +8,9 @@ import {Home, Box, Camera, Search, Favourite} from '../screens/index';
 const Tab = createBottomTabNavigator();
 
 const tabBarOptions = {
-  showLabel: false,
-  style: {
+  headerShown: false,
+  tabBarShowLabel: false,
+  tabBarStyle: {
     height: '10%',
   },
 };
@@ -37,8 +38,8 @@ const CameraButton = () => {
 const Tabs = () => {
   return (
     <Tab.Navigator
-      tabBarOptions={tabBarOptions}
       screenOptions={({route}) => ({
+        ...tabBarOptions,
         tabBarIcon: ({focused}) => {
           const tintColor = focused ? COLORS.primary : COLORS.gray;
 
