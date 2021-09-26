@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {icons, images, COLORS, SIZES, FONTS} from '../../constants';
 
-export const Home = () => {
+export const Home = ({navigation}) => {
   const [newPlants, setNewPlants] = useState([
     {
       id: 0,
@@ -54,6 +54,10 @@ export const Home = () => {
       id: 3,
       img: images.profile4,
     },
+    {
+      id: 4,
+      img: images.profile4,
+    },
   ]);
 
   const renderNewplant = (item, index) => {
@@ -94,6 +98,67 @@ export const Home = () => {
         </TouchableOpacity>
       </View>
     );
+  };
+
+  const renderFriendsComponent = () => {
+    if (friendList.length === 0) {
+      return <View> </View>;
+    } else if (friendList.length <= 3) {
+      return friendList.map((item, index) => {
+        return (
+          <View
+            key={`friend-${index}`}
+            style={index === 0 ? {} : {marginLeft: -20}}>
+            <Image
+              source={item.img}
+              resizeMode="cover"
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 25,
+                borderWidth: 3,
+                borderColor: COLORS.primary,
+              }}
+            />
+          </View>
+        );
+      });
+    } else {
+      return (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          {friendList.map((item, index) => {
+            if (index <= 2) {
+              return (
+                <View
+                  key={`friend-${index}`}
+                  style={index === 0 ? {} : {marginLeft: -20}}>
+                  <Image
+                    source={item.img}
+                    resizeMode="cover"
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 25,
+                      borderWidth: 3,
+                      borderColor: COLORS.primary,
+                    }}
+                  />
+                </View>
+              );
+            }
+          })}
+
+          <Text
+            style={{marginLeft: 5, color: COLORS.secondary, ...FONTS.body3}}>
+            +{friendList.length - 3} More
+          </Text>
+        </View>
+      );
+    }
   };
 
   return (
@@ -159,11 +224,11 @@ export const Home = () => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
               }}>
-              <Text style={{color: COLORS.primary, ...FONTS.h2}}>
+              <Text style={{color: COLORS.secondary, ...FONTS.h2}}>
                 Today's Share
               </Text>
               <TouchableOpacity onPress={() => console.log('See all pressed')}>
-                <Text style={{color: COLORS.primary, ...FONTS.body2}}>
+                <Text style={{color: COLORS.secondary, ...FONTS.body3}}>
                   See All
                 </Text>
               </TouchableOpacity>
@@ -180,7 +245,7 @@ export const Home = () => {
                   flex: 1,
                 }}>
                 <TouchableOpacity
-                  onPress={() => console.log('clicou')}
+                  onPress={() => navigation.navigate('PlantDetail')}
                   style={{
                     flex: 1,
                   }}>
@@ -195,7 +260,7 @@ export const Home = () => {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => console.log('clicou')}
+                  onPress={() => navigation.navigate('PlantDetail')}
                   style={{
                     flex: 1,
                     marginTop: SIZES.font,
@@ -216,7 +281,7 @@ export const Home = () => {
                   flex: 1.3,
                 }}>
                 <TouchableOpacity
-                  onPress={() => console.log('clicou')}
+                  onPress={() => navigation.navigate('PlantDetail')}
                   style={{
                     flex: 1,
                     marginLeft: SIZES.font,
@@ -254,9 +319,9 @@ export const Home = () => {
                   flex: 1.3,
                   flexDirection: 'row',
                   alignItems: 'center',
-                  backgroundColor: 'yellow',
-                }}
-              />
+                }}>
+                {renderFriendsComponent()}
+              </View>
 
               <View
                 style={{
@@ -264,9 +329,35 @@ export const Home = () => {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'flex-end',
-                  backgroundColor: 'red',
                 }}>
-                <Text>Add Friend</Text>
+                <Text
+                  style={{
+                    color: COLORS.secondary,
+                    ...FONTS.body3,
+                  }}>
+                  Add Friend
+                </Text>
+
+                <TouchableOpacity
+                  style={{
+                    marginLeft: SIZES.base,
+                    width: 40,
+                    height: 40,
+                    borderRadius: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: COLORS.gray,
+                  }}
+                  onPress={() => console.log('clicou')}>
+                  <Image
+                    source={icons.plus}
+                    resizeMode="contain"
+                    style={{
+                      width: 20,
+                      height: 20,
+                    }}
+                  />
+                </TouchableOpacity>
               </View>
             </View>
           </View>

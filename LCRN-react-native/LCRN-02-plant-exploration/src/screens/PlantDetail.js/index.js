@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
-export const Plantdetail = () => {
+export const PlantDetail = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Plantdetail</Text>
+      <Text style={styles.title}>PlantDetail</Text>
     </View>
   );
 };
